@@ -78,12 +78,12 @@ public function update(Request $request, $id)
 {
     if ($id != null) {
 
-        $this->validate($request, [
-            'user_id' => 'required',
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        // $this->validate($request, [
+        //     'user_id' => 'required',
+        //     'title' => 'required|max:255',
+        //     'content' => 'required',
+        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
 
         $blog = Article::findOrFail($id);
 
@@ -97,10 +97,10 @@ public function update(Request $request, $id)
 
         }
 
-        $blog->user_id = $request->user_id;
-        $blog->title = $request->title;
-        $blog->slug = strtolower(preg_replace('/\s+/', '-', $request->title));
-        $blog->content = $request->content;
+        $blog->user_id = $request->input('user_id');
+        $blog->title = $request->input('title');
+        $blog->slug = strtolower(preg_replace('/\s+/', '-', $request->input('title')));
+        $blog->content = $request->input('content');
 
         if ($blog->save()) {
 
